@@ -45,8 +45,8 @@
         </div>
         </div>
 
-        <button  [hidden]="qTwoInfo" type="button" color="primary" mat-raised-button [disabled]="!selectedYear" (click)="dialogSubmit(challenges[question].id)" style="float:right;">Submit</button>
-        <button  [hidden]="!qTwoInfo" type="button" color="warn" mat-raised-button [disabled]="!selectedYear" (click)="dialogSubmit(challenges[question].id)" style="float:right;">Close</button>
+        <button  [hidden]="qTwoInfo" type="button" color="primary" mat-raised-button [disabled]="!selectedYear" (click)="submitChallenge(challenges[question].id,challenges[question].id)" style="float:right;">Submit</button>
+        <button  [hidden]="!qTwoInfo" type="button" color="warn" mat-raised-button [disabled]="!selectedYear" (click)="submitChallenge(challenges[question].id)" style="float:right;">Close</button>
     </ng-template>
 <ng-template #errorPage>
     <p>

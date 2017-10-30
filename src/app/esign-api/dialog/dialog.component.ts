@@ -29,9 +29,9 @@ export class DialogComponent implements OnInit {
   endYear = 2017;
   selectedYear: string;
   fullImagePath;
+  tempChallenges;
 
-
-  challenges:any = {};
+  challenges;
   
 
   constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog, public dialogService : DialogService,
@@ -46,6 +46,7 @@ export class DialogComponent implements OnInit {
     });
     this.esignAPIUrl = this.apiService.getESignAPIUrl();
     this.fullImagePath = "../assets/images/sa.jpg";
+    this.challenges = []
   }
 
   openDlg(){
@@ -65,45 +66,30 @@ export class DialogComponent implements OnInit {
 
   //public challenges: IChallenges; 
   getQuestions() {
+
+  this.dialogService
+  .getChallenges(1)
+  .subscribe(
+    res => {
+      console.log(res);
+       this.tempChallenges = res;
+       
+       this.challenges.push(this.tempChallenges);
+       console.log(res );
+       alert(JSON.stringify(this.challenges));
+       this.responseMessage = "success";
+       this.openDlg();
+  },
+  err => {
+      console.log(err );
+  });
+  
+   
       const headers = new HttpHeaders().append('LOB', this.lineOfBusiness)
       .append('applicationName', this.appName)
     //  const url = `${this.esignAPIUrl}/${this.guid}/questions`;
       const url = "http://localhost:3000/challenges";
-      this.challenges = {
-        "challenges": [
-            {
-                "id": "1",
-                "challenge": "Enter your date of birth",
-                "status": ""
-            }
-        ],
-        "error": null,
-        "additionalProperties": {}
-    }
-        return this.http.get<IChallenges>(url, {headers: headers}).subscribe( data => {
-          //this.challenges = data;
-          //console.log(this.challenges);
-          //this.status = "success";
-          //setTimeout(()=>{this.openDlg();},3000)
-
-          this.responseMessage = "success";
-
-          console.log(this.challenges);
-          this.openDlg();
-         },
-         (err: HttpErrorResponse) => {
-          console.log(err.error);
-          console.log(err.name);
-          console.log(err.message);
-          console.log(err.status);
-          if(err.status === 500){
-            this.responseMessage ="Expired link";
-          } else if(err.status === 400) {
-            this.responseMessage ="Invalid Url";
-          }
-          this.openDlg();
-        }
-        );
+   
   }
 
   ngOnInit() {
@@ -123,7 +109,7 @@ export class DialogOverview implements OnInit {
     public dialogRef: MatDialogRef<DialogOverview>,
     @Inject(MAT_DIALOG_DATA) public data: any, public router: Router, public dialogService: DialogService) { 
       this.generateYears(this.startYear, this.endYear);
-      this.challenges = this.data.challenges.challenges;
+      this.challenges = this.data.challenges;
       this.responseMessage = this.data.status;
       this.question = 0;
     }
@@ -155,7 +141,9 @@ export class DialogOverview implements OnInit {
       // After close I want to redirect to google.com
     }
 
-    dialogSubmit(qid){
+    submitChallenge(qid,question,answer){
+
+/*
       if(qid == 1){
       if (this.selectedYear == 1962) {
         this.valueIncorrect = false;
@@ -195,6 +183,8 @@ export class DialogOverview implements OnInit {
     
     
     }
+
+    */
     }
     
     ngOnInit(){

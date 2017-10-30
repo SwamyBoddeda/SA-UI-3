@@ -12,6 +12,7 @@ import { ESignService } from '../shared/esign.service';
 
 import { EsignPingComponent } from '../ping/esign-ping.component';
 import { ESignUrlComponent } from '../ping/esign-url.component';
+import { eDeliveryModule } from './e-delivery/e-delivery.module'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ESignUrlComponent } from '../ping/esign-url.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    eDeliveryModule
   ],
   exports: [
     AppRoutingModule,

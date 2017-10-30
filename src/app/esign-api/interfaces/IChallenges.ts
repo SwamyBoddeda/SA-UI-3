@@ -4,10 +4,21 @@ export class IChallenges {
 }
 
 export class IChallenge {
-    id: string;
+    sequence: string;
     challenge: string;
     status: string;
+    attempt:number;
     choices:any[];
+    token: string;
+}
+
+export class IChallengeResponse {
+    sequence: string;
+    challenge: string;
+    status: string;
+    attempt:number;
+    choices:any[];
+    token: string;
 }
 
 export class IChallengeError {
