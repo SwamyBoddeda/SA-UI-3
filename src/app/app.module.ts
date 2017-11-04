@@ -13,27 +13,23 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DialogModule } from './esign-api/dialog/dialog.module';
 import { CoreModule } from './esign-api/core/core.module';
-import { MaterialModule } from './material.module';
 //import { NgbdModalComponent, NgbdModalContent } from './modal.component';
 
+
 import { EDeliveryComponent } from './esign-api/e-delivery/e-delivery.component';
-import { SaHeaderComponent } from './esign-api/e-delivery/sa-header/sa-header.component';
-import { eDeliveryModule } from './esign-api/e-delivery/e-delivery.module'
 
 @NgModule({
   declarations: [
     AppComponent,
-    EDeliveryComponent,
-    SaHeaderComponent,
+    EDeliveryComponent
+    
   ],
   imports: [
     AppRoutingModule,
     CoreModule,
     DialogModule,
-    eDeliveryModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
     [NgbModule.forRoot()]
   ],
   providers: [

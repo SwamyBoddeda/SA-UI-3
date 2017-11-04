@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { 
-    MatDialogModule, 
+       MatDialogModule, 
     MatButtonModule,
     MatListModule,
     MATERIAL_COMPATIBILITY_MODE,
@@ -9,7 +9,11 @@ import {
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatInputModule } from '@angular/material';
+    MatInputModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule           
+   } from '@angular/material';
 @NgModule({
   imports: [
     MatDialogModule, 
@@ -20,8 +24,10 @@ import {
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatInputModule 
-    
+    MatInputModule ,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatDialogModule, 
@@ -32,7 +38,10 @@ import {
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatInputModule 
+    MatInputModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 
 })

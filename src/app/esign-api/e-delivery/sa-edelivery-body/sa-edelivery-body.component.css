@@ -1,0 +1,16 @@
+.sa-headers-align .mat-expansion-panel-header-title, 
+.sa-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.sa-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+.eDelivery-expansion-panel-header{
+  background-color: #e8e5e5;
+}
+.mat-expansion-demo-width {
+  width: 600px;
+  display: block;
+}

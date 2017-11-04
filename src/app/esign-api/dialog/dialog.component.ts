@@ -39,22 +39,22 @@ export class DialogComponent implements OnInit {
     private apiService: EsignApiService
   ) {
     this.route.params.subscribe((params: Params) => {
-      console.log(params);
       this.guid = params['guid'];
       this.lineOfBusiness = params['lob'];
       this.appName = params['appName'];
     });
     this.esignAPIUrl = this.apiService.getESignAPIUrl();
-    this.fullImagePath = "../assets/images/sa.jpg";
+    this.fullImagePath = "../assets/images/esignBackground.jpg";
+    
     this.challenges = []
   }
 
   openDlg(){
-    alert(JSON.stringify(this.challenges));
+    //alert(JSON.stringify(this.challenges));
     let dialogRef = this.dialog.open(DialogOverview, {
       width: '45%',
       data:  { 
-        challenges : this.challenges ,
+        challenges : this.challenges,
         status : this.responseMessage
        }
     });
@@ -63,38 +63,32 @@ export class DialogComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
-  //public challenges: IChallenges; 
-  getQuestions() {
-
-  this.dialogService
-  .getChallenges(1)
-  .subscribe(
-    res => {
-      console.log(res);
-       this.tempChallenges = res;
-       
-       this.challenges.push(this.tempChallenges);
-       console.log(res );
-       alert(JSON.stringify(this.challenges));
-       this.responseMessage = "success";
-       this.openDlg();
-  },
-  err => {
-      console.log(err );
-  });
   
-   
-      const headers = new HttpHeaders().append('LOB', this.lineOfBusiness)
-      .append('applicationName', this.appName)
-    //  const url = `${this.esignAPIUrl}/${this.guid}/questions`;
-      const url = "http://localhost:3000/challenges";
-   
-  }
+  getQuestions() {
+    this.dialogService.getChallenges(this.guid, this.lineOfBusiness, this.appName).subscribe(
+        res => {
+          //console.log(res);
+          this.tempChallenges = res;
+          this.challenges.push(this.tempChallenges);
+          console.log(res );
+          //alert(JSON.stringify(this.challenges));
+          this.responseMessage = "success";
+          this.openDlg();
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.error);
+          if(err.status === 500){
+            this.responseMessage ="genericError";
+          } else if(err.status === 400) {
+            this.responseMessage ="invalidLink";            
+          }
+          this.openDlg();
+        }
+      );
+    }
 
   ngOnInit() {
     this.getQuestions();
-    
   }
 }
 
@@ -138,53 +132,34 @@ export class DialogOverview implements OnInit {
 
     closeDialog(){
     window.location.href = 'https://www.google.com';
-      // After close I want to redirect to google.com
     }
 
-    submitChallenge(qid,question,answer){
-
-/*
-      if(qid == 1){
-      if (this.selectedYear == 1962) {
-        this.valueIncorrect = false;
-        this.dialogRef.close();
-      }
-      else{
-        this.dialogService
-        .getChallenges(2)
-        .subscribe(
-          res => {
-            console.log(res);
-             this.tempChallenges = res;
-             this.challenges.push(this.tempChallenges);
-             this.question = 1;
-        },
-        err => {
-            console.log(err );
-        });
-       
-        
-        this.qOne = false;
-        this.qOneInfo = true;
-        this.qTwo = true;
-      }
-    }
-    else if(qid == 2){
-      if(this.zipcodeValue == 1234){
-        this.dialogRef.close();
-     //   this.router.navigate(['/eDelivery']);
-      }
-      else{
-          this.qOneInfo = true;
-          this.qTwoInfo = true;
-          this.qTwo = false;
-      }
-     alert(this.zipcodeValue);
-    
-    
-    }
-
-    */
+    submitChallenge(qid,question, answer){
+      // we need to send (id, question and answer as object to below method)
+      this.dialogService.submitChallenges(answer).subscribe(
+        res => {
+          /*
+          if(res.token != null){
+            this.router.navigate(['/eDelivery']);
+          }else{
+          this.tempChallenges = res;
+          this.challenges.push(this.tempChallenges);
+          console.log(res );
+          
+          this.responseMessage = "success";
+         // this.openDlg();
+          }
+        */
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.error);
+          if(err.status === 500){
+            this.responseMessage ="genericError";
+          } else if(err.status === 400) {
+            this.responseMessage ="invalidLink";            
+          }
+        }
+      );
     }
     
     ngOnInit(){
